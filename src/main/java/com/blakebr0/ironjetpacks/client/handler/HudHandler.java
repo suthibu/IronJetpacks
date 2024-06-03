@@ -46,7 +46,7 @@ public final class HudHandler {
 
                     if (pos.side == 1) {
                         gfx.drawString(mc.font, fuel, pos.x - 8 - mc.font.width(fuel), pos.y - 21, 16383998);
-                        gfx.drawString(mc.font, fuel, pos.x - 8 - mc.font.width(throttle), pos.y - 6, 16383998);
+                        gfx.drawString(mc.font, throttle, pos.x - 8 - mc.font.width(throttle), pos.y - 6, 16383998);
                         gfx.drawString(mc.font, engine, pos.x - 8 - mc.font.width(engine), pos.y + 4, 16383998);
                         gfx.drawString(mc.font, hover, pos.x - 8 - mc.font.width(hover), pos.y + 14, 16383998);
                     } else {
