@@ -1,7 +1,6 @@
 package com.blakebr0.ironjetpacks.client.handler;
 
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -92,11 +91,6 @@ public final class InputHandler {
 
 	@SubscribeEvent
 	public void onServerStopping(ServerStoppingEvent event) {
-		InputHandler.clear();
-	}
-
-	@SubscribeEvent
-	public void onClientLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
 		InputHandler.clear();
 	}
 }
