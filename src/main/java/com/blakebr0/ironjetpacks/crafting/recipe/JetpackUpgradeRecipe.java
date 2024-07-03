@@ -54,8 +54,16 @@ public class JetpackUpgradeRecipe extends ShapedRecipe {
     public static class Serializer implements RecipeSerializer<JetpackUpgradeRecipe> {
         @Override
         public JetpackUpgradeRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            var recipe = (JetpackUpgradeRecipe) RecipeSerializer.SHAPED_RECIPE.fromJson(recipeId, json);
-            return new JetpackUpgradeRecipe(recipeId, recipe.getGroup(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), recipe.getIngredients(), recipe.result, recipe.showNotification());
+            var recipe = RecipeSerializer.SHAPED_RECIPE.fromJson(recipeId, json);
+            return new JetpackUpgradeRecipe(
+                    recipeId,
+                    recipe.getGroup(),
+                    recipe.getRecipeWidth(),
+                    recipe.getRecipeHeight(),
+                    recipe.getIngredients(),
+                    recipe.getResultItem(RegistryAccess.EMPTY),
+                    recipe.showNotification()
+            );
         }
 
         @Override
