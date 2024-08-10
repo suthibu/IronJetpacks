@@ -10,15 +10,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
 public final class HudHandler {
-    private static final ResourceLocation HUD_TEXTURE = new ResourceLocation(IronJetpacks.MOD_ID, "textures/gui/hud.png");
+    private static final ResourceLocation HUD_TEXTURE = IronJetpacks.resource("textures/gui/hud.png");
 
-    private static final IGuiOverlay HUD_OVERLAY = (gui, gfx, partialTick, width, height) -> {
+    @SubscribeEvent
+    public void onRegisterGuiOverlays(RenderGuiEvent.Pre event) {
         var mc = Minecraft.getInstance();
         if (mc.player != null && isVisible(mc)) {
             var chest = JetpackUtils.getEquippedJetpack(mc.player);
@@ -29,6 +28,8 @@ public final class HudHandler {
                 if (pos != null) {
                     int xPos = (int) (pos.x / 0.33) - 18;
                     int yPos = (int) (pos.y / 0.33) - 78;
+
+                    var gfx = event.getGuiGraphics();
 
                     var matrix = gfx.pose();
 
@@ -58,11 +59,6 @@ public final class HudHandler {
                 }
             }
         }
-    };
-
-    @SubscribeEvent
-    public void onRegisterGuiOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), "jetpack_hud", HUD_OVERLAY);
     }
 
     private static HudPos getHudPos() {
@@ -75,10 +71,8 @@ public final class HudHandler {
             case 1 -> new HudPos(10 + xOffset, window.getGuiScaledHeight() / 2 + yOffset, 0);
             case 2 -> new HudPos(10 + xOffset, window.getGuiScaledHeight() - 30 + yOffset, 0);
             case 3 -> new HudPos(window.getGuiScaledWidth() - 8 - xOffset, 30 + yOffset, 1);
-            case 4 ->
-                    new HudPos(window.getGuiScaledWidth() - 8 - xOffset, window.getGuiScaledHeight() / 2 + yOffset, 1);
-            case 5 ->
-                    new HudPos(window.getGuiScaledWidth() - 8 - xOffset, window.getGuiScaledHeight() - 30 + yOffset, 1);
+            case 4 -> new HudPos(window.getGuiScaledWidth() - 8 - xOffset, window.getGuiScaledHeight() / 2 + yOffset, 1);
+            case 5 -> new HudPos(window.getGuiScaledWidth() - 8 - xOffset, window.getGuiScaledHeight() - 30 + yOffset, 1);
             default -> null;
         };
 
@@ -128,18 +122,8 @@ public final class HudHandler {
                 || !ModConfigs.SHOW_HUD_OVER_CHAT.get()
                 && !(mc.screen instanceof ChatScreen))
                 && !mc.options.hideGui
-                && !mc.options.renderDebug;
+                && !mc.getDebugOverlay().showDebugScreen();
     }
 
-    private static class HudPos {
-        public int x;
-        public int y;
-        public int side;
-
-        public HudPos(int x, int y, int side) {
-            this.x = x;
-            this.y = y;
-            this.side = side;
-        }
-    }
+    private record HudPos(int x, int y, int side) { }
 }

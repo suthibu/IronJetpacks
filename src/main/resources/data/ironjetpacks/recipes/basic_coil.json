@@ -7,16 +7,16 @@
   ],
   "key": {
     "R": {
-      "tag": "forge:dusts/redstone"
+      "tag": "c:dusts/redstone"
     },
     "D": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "S": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:rods/wooden"
     }
   },
   "result": {
-    "item": "ironjetpacks:basic_coil"
+    "id": "ironjetpacks:basic_coil"
   }
 }
