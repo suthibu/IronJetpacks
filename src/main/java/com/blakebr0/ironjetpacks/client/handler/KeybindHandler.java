@@ -70,7 +70,7 @@ public final class KeybindHandler {
     }
 
     @SubscribeEvent
-    public void onMouseInput(InputEvent.MouseButton event) {
+    public void onMouseInput(InputEvent.MouseButton.Pre event) {
         var player = Minecraft.getInstance().player;
         if (player == null)
             return;
