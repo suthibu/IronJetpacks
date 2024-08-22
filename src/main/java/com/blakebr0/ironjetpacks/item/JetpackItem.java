@@ -29,7 +29,7 @@ import java.util.List;
 
 public class JetpackItem extends BaseArmorItem implements IColored {
     public JetpackItem() {
-        super(ModArmorMaterials.JETPACK, Type.CHESTPLATE, Properties::setNoRepair);
+        super(ModArmorMaterials.JETPACK, Type.CHESTPLATE, p -> p.stacksTo(1).setNoRepair());
     }
 
     @Override
