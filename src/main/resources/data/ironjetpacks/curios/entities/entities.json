@@ -6,5 +6,5 @@
     }
   ],
   "entities": ["player"],
-  "slots": ["body"]
+  "slots": ["back"]
 }
