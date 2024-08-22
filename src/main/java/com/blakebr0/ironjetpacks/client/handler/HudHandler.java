@@ -114,7 +114,7 @@ public final class HudHandler {
     }
 
     private static Component getThrottleComponent(ItemStack stack) {
-        return Component.literal("T: " + (int) (JetpackUtils.getThrottle(stack) * 100)).withStyle(ChatFormatting.GRAY);
+        return Component.literal("T: " + (int) (JetpackUtils.getThrottle(stack) * 100) + "%").withStyle(ChatFormatting.GRAY);
     }
 
     private static Component getEngineComponent(ItemStack stack) {
