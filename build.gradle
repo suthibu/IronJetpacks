@@ -22,7 +22,7 @@ boolean isWorkspace = findProject(':Cucumber') != null
 repositories {
     maven { url 'https://maven.blakesmods.com' }
     maven { url 'https://maven.blamejared.com' }
-    maven { url 'https://maven.theillusivec4.top/' }
+    maven { url 'https://maven.octo-studios.com/releases' }
     maven {
         url 'https://cursemaven.com'
         content {
@@ -93,18 +93,18 @@ dependencies {
     compileOnly "curse.maven:controllable-317269:${controllable_version}"
     compileOnly "curse.maven:framework-549225:${framework_version}"
 
-    // runtimeOnly "top.theillusivec4.curios:curios-forge:${curios_version}"
+    runtimeOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
     runtimeOnly "curse.maven:jade-324717:${jade_version}"
     runtimeOnly "mezz.jei:jei-${jei_mc_version}-neoforge:${jei_version}"
 
-    compileOnly "top.theillusivec4.curios:curios-forge:${curios_version}:api"
+    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
     compileOnly "mezz.jei:jei-${jei_mc_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${jei_mc_version}-neoforge-api:${jei_version}"
 }
 
 tasks.withType(ProcessResources).configureEach {
     var replaceProperties = [
-            mod_version            : version.split('-').last(),
+            mod_version: version.split('-').last(),
     ]
     inputs.properties replaceProperties
 

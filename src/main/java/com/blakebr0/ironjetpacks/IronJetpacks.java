@@ -7,7 +7,6 @@ import com.blakebr0.ironjetpacks.client.handler.InputHandler;
 import com.blakebr0.ironjetpacks.client.handler.JetpackClientHandler;
 import com.blakebr0.ironjetpacks.client.handler.KeybindHandler;
 import com.blakebr0.ironjetpacks.compat.ControllableCompat;
-import com.blakebr0.ironjetpacks.compat.curios.CuriosCompat;
 import com.blakebr0.ironjetpacks.config.ModConfigs;
 import com.blakebr0.ironjetpacks.crafting.DynamicRecipeManager;
 import com.blakebr0.ironjetpacks.handler.RegisterCapabilityHandler;
@@ -29,7 +28,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
@@ -71,10 +69,6 @@ public final class IronJetpacks {
 		NeoForge.EVENT_BUS.register(DynamicRecipeManager.getInstance());
 		NeoForge.EVENT_BUS.register(JetpackRegistry.getInstance());
 
-		if (ModConfigs.isCuriosInstalled()) {
-			NeoForge.EVENT_BUS.register(new CuriosCompat());
-		}
-
 		JetpackRegistry.getInstance().writeDefaultJetpackFiles();
 	}
 
@@ -86,13 +80,6 @@ public final class IronJetpacks {
 
 		if (ModConfigs.isControllableInstalled()) {
 			NeoForge.EVENT_BUS.register(new ControllableCompat());
-		}
-	}
-
-	@SubscribeEvent
-	public void onInterModEnqueue(InterModEnqueueEvent event) {
-		if (ModConfigs.isCuriosEnabled()) {
-			CuriosCompat.onInterModEnqueue(event);
 		}
 	}
 
