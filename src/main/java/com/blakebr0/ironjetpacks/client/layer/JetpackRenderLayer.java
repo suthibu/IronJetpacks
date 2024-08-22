@@ -20,8 +20,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 public class JetpackRenderLayer<T extends LivingEntity, M extends HumanoidModel<T>> extends RenderLayer<T, M> {
-    private static final ResourceLocation TEXTURE = IronJetpacks.resource("textures/armor/jetpack.png");
-    private static final ResourceLocation TEXTURE_OVERLAY = IronJetpacks.resource("textures/armor/jetpack_overlay.png");
+    private static final ResourceLocation TEXTURE = IronJetpacks.resource("textures/models/armor/jetpack_layer_1.png");
+    private static final ResourceLocation TEXTURE_OVERLAY = IronJetpacks.resource("textures/models/armor/jetpack_layer_1_overlay.png");
 
     public JetpackRenderLayer(RenderLayerParent<T, M> parent) {
         super(parent);
