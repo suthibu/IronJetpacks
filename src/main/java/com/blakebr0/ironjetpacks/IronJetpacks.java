@@ -1,5 +1,6 @@
 package com.blakebr0.ironjetpacks;
 
+import com.blakebr0.ironjetpacks.client.ModClientExtensions;
 import com.blakebr0.ironjetpacks.client.ModelHandler;
 import com.blakebr0.ironjetpacks.client.handler.ColorHandler;
 import com.blakebr0.ironjetpacks.client.handler.HudHandler;
@@ -56,6 +57,7 @@ public final class IronJetpacks {
 		if (FMLEnvironment.dist == Dist.CLIENT) {
 			bus.register(new ColorHandler());
 			bus.register(new ModelHandler());
+			bus.register(new ModClientExtensions());
 			bus.addListener(KeybindHandler::onRegisterKeyMappings);
 		}
 

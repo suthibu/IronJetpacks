@@ -5,24 +5,18 @@ import com.blakebr0.cucumber.item.BaseArmorItem;
 import com.blakebr0.cucumber.lib.Tooltips;
 import com.blakebr0.cucumber.util.Formatting;
 import com.blakebr0.cucumber.util.Localizable;
-import com.blakebr0.ironjetpacks.client.ModelHandler;
 import com.blakebr0.ironjetpacks.client.handler.InputHandler;
-import com.blakebr0.ironjetpacks.client.model.JetpackModel;
 import com.blakebr0.ironjetpacks.config.ModConfigs;
 import com.blakebr0.ironjetpacks.init.ModArmorMaterials;
 import com.blakebr0.ironjetpacks.lib.ModTooltips;
 import com.blakebr0.ironjetpacks.util.JetpackUtils;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -30,10 +24,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 public class JetpackItem extends BaseArmorItem implements IColored {
     public JetpackItem() {
@@ -204,13 +196,13 @@ public class JetpackItem extends BaseArmorItem implements IColored {
         var jetpack = JetpackUtils.getJetpack(stack);
 
         if (flag.isAdvanced()) {
-            tooltip.add(ModTooltips.JETPACK_ID.args(jetpack.getId()).color(ChatFormatting.DARK_GRAY).build());
+            tooltip.add(ModTooltips.JETPACK_ID.args(jetpack.getId().toString()).color(ChatFormatting.DARK_GRAY).build());
             tooltip.add(Component.literal(" "));
         }
 
         if (!jetpack.creative) {
             var energy = JetpackUtils.getEnergyStorage(stack);
-            tooltip.add(Component.literal(Formatting.number(energy.getEnergyStored()).getString() + " / " + Formatting.energy(energy.getMaxEnergyStored()).getString()).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Formatting.number(energy.getEnergyStored()).append(" / ").append(Formatting.energy(energy.getMaxEnergyStored()).withStyle(ChatFormatting.GRAY)));
         } else {
             tooltip.add(ModTooltips.INFINITE.build().append(" FE"));
         }
@@ -252,11 +244,6 @@ public class JetpackItem extends BaseArmorItem implements IColored {
     }
 
     @Override
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(ItemRenderProperties.INSTANCE);
-    }
-
-    @Override
     public int getColor(int i, ItemStack stack) {
         var jetpack = JetpackUtils.getJetpack(stack);
         return i == 1 ? jetpack.color : -1;
@@ -265,48 +252,5 @@ public class JetpackItem extends BaseArmorItem implements IColored {
     private static void fly(Player player, double y) {
         var motion = player.getDeltaMovement();
         player.setDeltaMovement(motion.x(), y, motion.z());
-    }
-
-    static class ItemRenderProperties implements IClientItemExtensions {
-        public static final ItemRenderProperties INSTANCE = new ItemRenderProperties();
-
-        private JetpackModel[] models;
-
-        @Override
-        public HumanoidModel<?> getHumanoidArmorModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> _default) {
-            if (this.models == null) {
-                this.models = new JetpackModel[6];
-
-                for (int i = 0; i < 6; i++) {
-                    var layer = Minecraft.getInstance().getEntityModels().bakeLayer(ModelHandler.JETPACK_LAYER);
-
-                    this.models[i] = new JetpackModel(layer, i);
-                }
-            }
-
-            var jetpack = JetpackUtils.getJetpack(stack);
-
-            if (jetpack.creative) {
-                return this.models[5];
-            }
-
-            var energy = JetpackUtils.getEnergyStorage(stack);
-            var stored = (double) energy.getEnergyStored() / (double) energy.getMaxEnergyStored();
-
-            int state = 0;
-            if (stored > 0.8) {
-                state = 5;
-            } else if (stored > 0.6) {
-                state = 4;
-            } else if (stored > 0.4) {
-                state = 3;
-            } else if (stored > 0.2) {
-                state = 2;
-            } else if (stored > 0) {
-                state = 1;
-            }
-
-            return this.models[state];
-        }
     }
 }
