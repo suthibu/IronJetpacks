@@ -19,7 +19,7 @@ public final class ControllableCompat {
     private static boolean sprint = false;
 
     @SubscribeEvent
-    public void onClientTick(ClientTickEvent event) {
+    public void onClientTick(ClientTickEvent.Pre event) {
         var mc = Minecraft.getInstance();
         if (mc.getConnection() == null)
             return;
