@@ -178,7 +178,7 @@ public class Jetpack {
 		json.addProperty("name", this.name);
 		json.addProperty("disable", this.disabled);
 		json.addProperty("tier", this.tier);
-		json.addProperty("color", Integer.toHexString(this.color));
+		json.addProperty("color", Integer.toHexString(this.color & 0x00FFFFFF));
 		json.addProperty("armorPoints", this.armorPoints);
 		json.addProperty("enchantability", this.enchantablilty);
 		json.addProperty("craftingMaterial", this.craftingMaterialString);
