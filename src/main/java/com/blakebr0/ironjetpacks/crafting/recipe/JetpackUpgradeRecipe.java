@@ -1,5 +1,6 @@
 package com.blakebr0.ironjetpacks.crafting.recipe;
 
+import com.blakebr0.ironjetpacks.init.ModDataComponentTypes;
 import com.blakebr0.ironjetpacks.init.ModItems;
 import com.blakebr0.ironjetpacks.init.ModRecipeSerializers;
 import com.mojang.serialization.Codec;
@@ -30,6 +31,7 @@ public class JetpackUpgradeRecipe extends ShapedRecipe {
 
         if (!stack.isEmpty() && stack.is(ModItems.JETPACK)) {
             result.applyComponents(stack.getComponents());
+            result.set(ModDataComponentTypes.JETPACK_ID, this.result.get(ModDataComponentTypes.JETPACK_ID));
         }
 
         return result;
