@@ -22,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.Unbreakable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -29,7 +30,11 @@ import java.util.List;
 
 public class JetpackItem extends BaseArmorItem implements IColored {
     public JetpackItem() {
-        super(ModArmorMaterials.JETPACK, Type.CHESTPLATE, p -> p.stacksTo(1).setNoRepair());
+        super(ModArmorMaterials.JETPACK, Type.CHESTPLATE, p -> p
+                .stacksTo(1)
+                .component(DataComponents.UNBREAKABLE, new Unbreakable(false))
+                .setNoRepair()
+        );
     }
 
     @Override
