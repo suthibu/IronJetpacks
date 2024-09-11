@@ -104,7 +104,8 @@ dependencies {
 
 tasks.withType(ProcessResources).configureEach {
     var replaceProperties = [
-            mod_version: version.split('-').last(),
+            mod_version            : version.split('-').last(),
+            cucumber_version       : cucumber_version.split('-').last(),
     ]
     inputs.properties replaceProperties
 
